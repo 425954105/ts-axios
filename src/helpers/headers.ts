@@ -1,5 +1,6 @@
 import { isPlainObject } from './util'
 
+//  统一为Content-Type
 function normalizeHeaderName(headers: any, normalizedName: string) {
   if (!headers) {
     return
@@ -11,6 +12,8 @@ function normalizeHeaderName(headers: any, normalizedName: string) {
     }
   })
 }
+
+//  处理headers的Content-Type
 export function processHeaders(headers: any, data: any): any {
   normalizeHeaderName(headers, 'Content-Type')
 
@@ -20,4 +23,26 @@ export function processHeaders(headers: any, data: any): any {
     }
   }
   return headers
+}
+
+//  处理响应header为对象
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if (!headers) {
+    return parsed
+  }
+
+  headers.split('\r\n').forEach(line => {
+    let [key, val] = line.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) {
+      return
+    }
+    if (val) {
+      val = val.trim()
+    }
+    parsed[key] = val
+  })
+
+  return parsed
 }

@@ -77,8 +77,8 @@ axios({
     url: '/base/post',
     responseType: 'json',
     data: {
-        a: 1,
-        b: 2
+        a: 3,
+        b: 4
     }
 }).then((res) => {
     console.log(res);
